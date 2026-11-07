@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+*.spec
+
+# Local secrets / environment
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+
+# Local app data, logs and editor/tool state
+*.db
+*.sqlite
+*.sqlite3
+*.log
+.claude/
+.vscode/
+.idea/

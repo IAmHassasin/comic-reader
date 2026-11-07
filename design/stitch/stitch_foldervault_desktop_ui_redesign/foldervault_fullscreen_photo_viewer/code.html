@@ -1,0 +1,415 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FolderVault - Photo Viewer</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#001e2d",
+            "background": "#131313",
+            "outline": "#889299",
+            "surface-container-lowest": "#0e0e0e",
+            "on-primary-fixed": "#001e2b",
+            "tertiary": "#bae3ff",
+            "primary": "#b4e4ff",
+            "secondary-fixed-dim": "#e9c400",
+            "secondary": "#fff9ef",
+            "surface-container-high": "#2a2a2a",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#004d67",
+            "primary-fixed-dim": "#74d1ff",
+            "surface": "#131313",
+            "on-secondary": "#3a3000",
+            "surface-container": "#202020",
+            "error-container": "#93000a",
+            "outline-variant": "#3e484e",
+            "on-tertiary": "#00344b",
+            "tertiary-container": "#72cbff",
+            "surface-container-low": "#1b1c1c",
+            "surface-bright": "#393939",
+            "on-secondary-fixed": "#221b00",
+            "inverse-on-surface": "#303030",
+            "surface-variant": "#353535",
+            "on-background": "#e5e2e1",
+            "surface-dim": "#131313",
+            "on-secondary-container": "#725f00",
+            "tertiary-fixed-dim": "#81cfff",
+            "surface-container-highest": "#353535",
+            "on-primary-container": "#005572",
+            "secondary-fixed": "#ffe16d",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "tertiary-fixed": "#c6e7ff",
+            "primary-container": "#60cdff",
+            "secondary-container": "#ffdb3c",
+            "primary-fixed": "#c1e8ff",
+            "on-secondary-fixed-variant": "#544600",
+            "surface-tint": "#74d1ff",
+            "on-surface": "#e5e2e1",
+            "inverse-primary": "#006687",
+            "on-tertiary-fixed-variant": "#004c6b",
+            "on-tertiary-container": "#005577",
+            "inverse-surface": "#e5e2e1",
+            "on-primary": "#003548",
+            "on-surface-variant": "#bdc8cf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xs": "0.125rem",
+            "space-md": "0.5rem",
+            "margin": "0.5rem",
+            "space-xl": "1rem",
+            "space-sm": "0.25rem",
+            "space-lg": "0.75rem",
+            "gutter": "0.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-xs": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+            "body-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-lg": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-xs": ["10px", { "lineHeight": "12px", "letterSpacing": "0.4px", "fontWeight": "600" }],
+            "body-lg": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "headline-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #3e484e;
+      border-radius: 2px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface select-none h-screen w-screen overflow-hidden flex flex-col font-body-md relative antialiased">
+<!-- Desktop App Title / Top Bar Window Header -->
+<header class="h-[32px] bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-space-md z-50 text-label-xs font-label-xs select-none">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-primary font-semibold">
+<span class="material-symbols-outlined text-primary text-[14px]">folder_special</span>
+<span class="">FolderVault</span>
+</div>
+<span class="text-outline-variant">|</span>
+<span class="text-on-surface-variant font-normal">Photo Viewer — Set 003 — [Active: #003.jpg]</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="h-[22px] px-space-md hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded-none flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[13px]">minimize</span>
+</button>
+<button class="h-[22px] px-space-md hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded-none flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[12px]">crop_square</span>
+</button>
+<button class="h-[22px] px-space-md hover:bg-error-container hover:text-on-error-container text-on-surface-variant rounded-none flex items-center justify-center transition-colors" onclick="window.history.back()">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+</header>
+<!-- Main Viewport Canvas -->
+<main class="relative flex-1 bg-surface-container-lowest flex items-center justify-center overflow-hidden" id="canvas-area">
+<!-- Collapsible Top Floating HUD Bar (Fluent Acrylic Overlay) -->
+<section class="absolute top-space-md left-space-md right-space-md z-40 transition-all duration-200 transform translate-y-0" id="top-hud">
+<div class="bg-surface-container/90 backdrop-blur-md border border-outline-variant rounded-lg px-space-md h-[40px] flex items-center justify-between shadow-2xl">
+<!-- Left: Navigation breadcrumb & Index counter -->
+<div class="flex items-center gap-space-md">
+<button class="h-[26px] px-space-sm bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface rounded flex items-center gap-1 transition-colors text-label-sm font-label-sm" onclick="window.history.back()" title="Back to Gallery (Esc)">
+<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+<span class="">Esc</span>
+</button>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Photos</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-semibold">Set 003</span>
+<span class="ml-space-sm px-space-sm py-[2px] bg-surface-container-high text-primary rounded text-label-xs font-label-xs border border-outline-variant/60">
+              3 / 200
+            </span>
+</div>
+<!-- Metadata Tags -->
+<div class="hidden sm:flex items-center gap-1 ml-space-sm">
+<span class="inline-flex items-center h-[18px] px-1.5 rounded text-[10px] font-medium border bg-[#382A18] border-[#94682E] text-[#FFD285]">
+              best
+            </span>
+<span class="inline-flex items-center h-[18px] px-1.5 rounded text-[10px] font-medium border bg-[#382A18] border-[#94682E] text-[#FFD285]">
+              travel
+            </span>
+</div>
+</div>
+<!-- Center: Display Mode Toggle Buttons -->
+<div class="hidden md:flex items-center bg-surface-container-lowest p-[2px] rounded border border-outline-variant">
+<button class="h-[22px] px-space-sm bg-primary-container text-on-primary-container rounded flex items-center gap-1 text-label-xs font-label-xs font-semibold transition-colors" id="btn-fit-window">
+<span class="material-symbols-outlined text-[13px]">aspect_ratio</span>
+<span class="">Fit window [F]</span>
+</button>
+<button class="h-[22px] px-space-sm text-on-surface-variant hover:text-on-surface rounded flex items-center gap-1 text-label-xs font-label-xs transition-colors" id="btn-fit-width">
+<span class="material-symbols-outlined text-[13px]">width</span>
+<span class="">Fit width [W]</span>
+</button>
+<button class="h-[22px] px-space-sm text-on-surface-variant hover:text-on-surface rounded flex items-center gap-1 text-label-xs font-label-xs transition-colors" id="btn-actual-size">
+<span class="material-symbols-outlined text-[13px]">zoom_in</span>
+<span class="">100% [1]</span>
+</button>
+</div>
+<!-- Right: Actions & Tools -->
+<div class="flex items-center gap-space-xs">
+<!-- Favorite Toggle Button -->
+<button class="h-[26px] px-space-sm bg-surface-container border border-outline-variant hover:bg-surface-container-high text-[#FFD700] rounded flex items-center gap-1 transition-colors text-label-sm font-label-sm"><span class="material-symbols-outlined text-[15px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span><span class="text-on-surface">Folder Favorited</span></button>
+<!-- Toggle Info HUD -->
+<button class="h-[26px] w-[26px] bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface rounded flex items-center justify-center transition-colors" id="btn-toggle-info" title="Toggle Info (I)">
+<span class="material-symbols-outlined text-[15px]">info</span>
+</button>
+<!-- Fullscreen Action -->
+<button class="h-[26px] w-[26px] bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface rounded flex items-center justify-center transition-colors" id="btn-fullscreen" title="Full screen (F11)">
+<span class="material-symbols-outlined text-[15px]">fullscreen</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Side Navigation Chevrons -->
+<button class="absolute left-space-md top-1/2 -translate-y-1/2 z-30 h-12 w-9 rounded bg-surface-container/70 hover:bg-surface-container border border-outline-variant/80 text-on-surface-variant hover:text-on-surface flex items-center justify-center backdrop-blur-sm transition-all shadow-lg hover:scale-105 active:scale-95" title="Previous Image (Left Arrow)">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="absolute right-space-md top-1/2 -translate-y-1/2 z-30 h-12 w-9 rounded bg-surface-container/70 hover:bg-surface-container border border-outline-variant/80 text-on-surface-variant hover:text-on-surface flex items-center justify-center backdrop-blur-sm transition-all shadow-lg hover:scale-105 active:scale-95" title="Next Image (Right Arrow / Space)">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+<!-- High-Resolution Centered Image Frame -->
+<div class="relative max-w-full max-h-full flex items-center justify-center p-4 transition-transform duration-150 select-none" id="image-container">
+<img alt="Photos / Set 003 - Frame #003" class="max-h-[calc(100vh-140px)] max-w-[calc(100vw-60px)] object-contain rounded shadow-2xl border border-outline-variant/40" data-alt="A majestic high-resolution architectural photography of a brutalist concrete sanctuary nestled inside misty volcanic mountains at dawn. Atmospheric cinematic low-key lighting with sharp geometric edges, subtle golden hour reflections, and deep slate shadows matching the dark mode Windows Fluent application aesthetics. Ultra-sharp focus and balanced fine grain." id="main-preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp5W5U-6OEnRll6gaBMtdkYYhTgaImDyoaGDeTBYrUrtAioGi6L7a375C3J504WYkMM6vzVuvgdggtnUvi6tWO2xXBd7WOBgAQwYhF4VL0qPw0rsUvhkbzCUt6aZih98_si9UT4vO7DQ5kgS5hfPm5YReHwwdFtXH3_JCTO9fcsBp-IIfwb2wMaAgurIq4s2apyxwp7i-PktdVqgXGFCgxok8HNcWaLYenBxYcUmw">
+</div>
+<!-- Right Side File Properties Flyout (Toggleable with 'I') -->
+<aside class="absolute top-[48px] right-space-md w-[260px] bg-surface-container/95 backdrop-blur-md border border-outline-variant rounded-lg p-space-md shadow-2xl z-40 space-y-space-md transition-all duration-200" id="info-panel">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">feed</span>
+          EXIF &amp; Metadata
+        </span>
+<span class="text-label-xs font-label-xs text-outline font-normal">IMG_003.JPG</span>
+</div>
+<div class="grid grid-cols-2 gap-y-2 text-label-xs font-label-xs">
+<span class="text-on-surface-variant">Dimensions</span>
+<span class="text-on-surface text-right font-medium">6000 × 4000</span>
+<span class="text-on-surface-variant">File Size</span>
+<span class="text-on-surface text-right font-medium">18.4 MB</span>
+<span class="text-on-surface-variant">Camera Model</span>
+<span class="text-on-surface text-right font-medium">Sony A7R V</span>
+<span class="text-on-surface-variant">Focal / Lens</span>
+<span class="text-on-surface text-right font-medium">35mm f/1.4 GM</span>
+<span class="text-on-surface-variant">Exposure</span>
+<span class="text-on-surface text-right font-medium">1/250s, ISO 100</span>
+<span class="text-on-surface-variant">Color Space</span>
+<span class="text-on-surface text-right font-medium">sRGB IEC61966</span>
+</div>
+<div class="pt-space-xs border-t border-outline-variant">
+<span class="text-[10px] text-on-surface-variant block mb-1">Folder Taxonomy &amp; Directory:</span>
+<div class="p-1.5 rounded bg-surface-container-lowest border border-outline-variant text-[10px] text-outline font-mono break-all leading-tight">
+          D:\Archive\Photos\Set 003\003_main.jpg
+        </div>
+</div>
+</aside>
+<!-- Bottom Floating Acrylic Thumbnail Strip Carousel -->
+<div class="absolute bottom-[30px] left-1/2 -translate-x-1/2 z-40 bg-surface-container/85 backdrop-blur-md border border-outline-variant/80 rounded-lg p-1.5 shadow-2xl flex items-center gap-2 max-w-[92vw]" id="bottom-strip">
+<!-- Strip Quick Thumbnails (5 adjacent files) -->
+<div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar px-1 py-0.5">
+<!-- Thumbnail #1 -->
+<div class="relative group cursor-pointer rounded overflow-hidden border border-outline-variant/60 hover:border-outline opacity-60 hover:opacity-100 transition-all w-[64px] h-[44px] flex-shrink-0 bg-surface-container-lowest">
+<img alt="Thumbnail #1" class="w-full h-full object-cover" data-alt="Architectural detail shot of minimal geometric concrete facades in morning gloom with cold blue undertones and clean slate composition for folder view thumbnail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-kvmHzFJ5NYsIa1N2ry44IwoIPlvnM8bpSWyFThTscziQ3l3AOKZUUdp2f-hbDyhhxUjSeYAaxg2QoqNyip_qWc_8FqhL2abwGeIzxVt_znC5IzAyKiAl6JYPfxeWCJlCBdiYv3_iWd8PvIqoh726T8H48jA7u1Yeh2tPX557FJlTJQO8pQkNmfi5MtVHp2KXEoUEW65osmoJCq7v9QV6Nok4qTMUcN8MUriuiqw">
+<span class="absolute bottom-0.5 left-0.5 bg-black/70 px-1 py-0.2 rounded text-[9px] text-on-surface leading-tight font-mono">1</span>
+</div>
+<!-- Thumbnail #2 -->
+<div class="relative group cursor-pointer rounded overflow-hidden border border-outline-variant/60 hover:border-outline opacity-60 hover:opacity-100 transition-all w-[64px] h-[44px] flex-shrink-0 bg-surface-container-lowest">
+<img alt="Thumbnail #2" class="w-full h-full object-cover" data-alt="Wide panoramic vista of mist covered pine valley shrouded in atmospheric grey and deep black contrast with soft morning dawn glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZg96aW_cnwvCkGdwYBFsDwgQVMeumVXKc6VtUdN43YOKQ87GVCi3j-cCuZiWax35rqxImWaGtK-wUkzBQmIVq692TcX36Ibgs4etcadkAS4_-06fb9e0jwF8ZmhkA3tIn_FPsxfgbGe2Fk1lAVFYAPBXwbrtMgfY4uNUZyNa_rxzkjYGzQ6D08vejwJ16js2MgSEIgH8IB750ohNHV77sCam56dXIoNrSgiGZLcw">
+<span class="absolute bottom-0.5 left-0.5 bg-black/70 px-1 py-0.2 rounded text-[9px] text-on-surface leading-tight font-mono">2</span>
+</div>
+<!-- Thumbnail #3 (ACTIVE CURRENT PHOTO) -->
+<div class="relative cursor-pointer rounded overflow-hidden border-2 border-primary-container ring-1 ring-primary/40 opacity-100 w-[72px] h-[50px] flex-shrink-0 bg-surface-container-lowest shadow-md">
+<img alt="Thumbnail #3 - Active" class="w-full h-full object-cover" data-alt="Close up perspective of dark polished slate textures with subtle water reflections under minimal high-contrast directional spotlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2h9FVDktx48flpwEHYozWEBeEKxPaXu26ezDMc-38_9ub40d95TiPePqG4Tt0KQJxjIzJtYFnojUjFKm7APhlV2gO77iNpnLghew9CdO7_dLQ0keaaAmvLuX0pGW775P_QYq7oYcrSUbxo-GmeTrr4zDTIqEn-_rAhkaQnoCbVo0Bnv0tfJLuvmgjwKLg6d-2WLY1UGspMP92g7S2zBAHo3-T5f1aAztqS7OreuI">
+
+<span class="absolute bottom-0.5 left-0.5 bg-primary-container text-on-primary-container font-bold px-1 rounded text-[9px] leading-tight font-mono">3</span>
+</div>
+<!-- Thumbnail #4 -->
+<div class="relative group cursor-pointer rounded overflow-hidden border border-outline-variant/60 hover:border-outline opacity-60 hover:opacity-100 transition-all w-[64px] h-[44px] flex-shrink-0 bg-surface-container-lowest">
+<img alt="Thumbnail #4" class="w-full h-full object-cover" data-alt="Minimalist vertical composition of foggy mountainous road curve at dawn with muted slate and dark bronze gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB7GWxh7eiXsbtx-bDKeCj6pFqISg-S3qcJKMy45UDYfZb_htWZL6WnVDZoKXklVcol2qTcp-EECOAGDRTaIqN1AlaKpEsAdHvmHPLJmJVWLFmxJKUmcfgRjNW-MThuLmO_N_w6DOjSou3VqCKVzn_xLLsweU4IyhrUm26IMBUKXdZ-GJgj_u0KvzuzHlvPLb_2OYNBhjpLz-1N8rvpH-g4mhcoIetfhY-Gft5NCE">
+<span class="absolute bottom-0.5 left-0.5 bg-black/70 px-1 py-0.2 rounded text-[9px] text-on-surface leading-tight font-mono">4</span>
+</div>
+<!-- Thumbnail #5 -->
+<div class="relative group cursor-pointer rounded overflow-hidden border border-outline-variant/60 hover:border-outline opacity-60 hover:opacity-100 transition-all w-[64px] h-[44px] flex-shrink-0 bg-surface-container-lowest">
+<img alt="Thumbnail #5" class="w-full h-full object-cover" data-alt="Modernist dark interior room with floor to ceiling glass windows displaying a cloudy alpine lake during twilight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCogB5orBIx_zHbMpjo-0b8PFgb-tICpM3hpQnwLCbTpCwfMP6ZGD02JAB8oPwhezKkSDu1bAu72mb76sigicC4T0el3N_9Fjg_PlUEuQln4m97JEmgjV_vSETyMzmVZLhnWhMTO98PN3SeyoBUgGJcDp2z709o9A3f0C3PqQxjTsvj2y9nWuca-UnqWIuJIqKGsbDyjs6QKZlyvKPH2m6D2PCFRCl0ZgMfnaz_y8s">
+<span class="absolute bottom-0.5 left-0.5 bg-black/70 px-1 py-0.2 rounded text-[9px] text-on-surface leading-tight font-mono">5</span>
+</div>
+</div>
+<!-- Quick actions in strip -->
+<div class="h-6 w-[1px] bg-outline-variant mx-1"></div>
+<div class="flex items-center gap-1 pr-1">
+<button class="h-[26px] w-[26px] text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded flex items-center justify-center transition-colors" title="Rotate Counterclockwise">
+<span class="material-symbols-outlined text-[14px]">rotate_left</span>
+</button>
+<button class="h-[26px] w-[26px] text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded flex items-center justify-center transition-colors" title="Rotate Clockwise">
+<span class="material-symbols-outlined text-[14px]">rotate_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Keyboard Shortcuts & Status Footer Strip (Windows 11 Qt Footbar) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-space-md h-[22px] bg-surface-container-lowest border-t border-outline-variant text-on-surface-variant text-label-xs font-label-xs select-none">
+<div class="flex items-center gap-space-lg text-[10px]">
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">←</kbd>
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">→</kbd>
+<span class="text-outline">Prev/Next</span>
+</span>
+<span class="text-outline-variant">·</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">Space</kbd>
+<span class="text-outline">Next</span>
+</span>
+<span class="text-outline-variant">·</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">F</kbd>
+<span class="text-outline">Fit Window</span>
+</span>
+<span class="text-outline-variant">·</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">W</kbd>
+<span class="text-outline">Fit Width</span>
+</span>
+<span class="text-outline-variant">·</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">I</kbd>
+<span class="text-outline">Toggle Info</span>
+</span>
+<span class="text-outline-variant">·</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1 py-[1px] bg-surface-container rounded border border-outline-variant text-[9px] text-on-surface">Esc</kbd>
+<span class="text-outline">Back to Gallery</span>
+</span>
+</div>
+<!-- Trailing Zoom Level & Engine Indicator -->
+<div class="flex items-center gap-space-md text-[10px]">
+<span class="text-on-surface-variant font-medium">Zoom: <span id="zoom-indicator" class="">Fit (72%)</span></span>
+<span class="text-outline-variant">|</span>
+<span class="text-primary hover:underline cursor-pointer" onclick="toggleHud()">Hide Overlays (H)</span>
+</div>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+    const topHud = document.getElementById('top-hud');
+    const bottomStrip = document.getElementById('bottom-strip');
+    const infoPanel = document.getElementById('info-panel');
+    const mainImg = document.getElementById('main-preview');
+    const zoomIndicator = document.getElementById('zoom-indicator');
+    
+    let isHudVisible = true;
+    let isInfoVisible = true;
+
+    function toggleHud() {
+      isHudVisible = !isHudVisible;
+      if (isHudVisible) {
+        topHud.classList.remove('-translate-y-16', 'opacity-0');
+        bottomStrip.classList.remove('translate-y-16', 'opacity-0');
+      } else {
+        topHud.classList.add('-translate-y-16', 'opacity-0');
+        bottomStrip.classList.add('translate-y-16', 'opacity-0');
+      }
+    }
+
+    function toggleInfo() {
+      isInfoVisible = !isInfoVisible;
+      if (isInfoVisible) {
+        infoPanel.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        infoPanel.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    document.getElementById('btn-toggle-info').addEventListener('click', toggleInfo);
+
+    // Display modes toggles
+    const btnFitWindow = document.getElementById('btn-fit-window');
+    const btnFitWidth = document.getElementById('btn-fit-width');
+    const btnActual = document.getElementById('btn-actual-size');
+
+    btnFitWindow.addEventListener('click', () => {
+      mainImg.className = "max-h-[calc(100vh-140px)] max-w-[calc(100vw-60px)] object-contain rounded shadow-2xl border border-outline-variant/40";
+      zoomIndicator.textContent = "Fit (72%)";
+      updateModeButtons(btnFitWindow);
+    });
+
+    btnFitWidth.addEventListener('click', () => {
+      mainImg.className = "w-full max-h-[92vh] object-cover rounded shadow-2xl border border-outline-variant/40";
+      zoomIndicator.textContent = "Fit Width (100%)";
+      updateModeButtons(btnFitWidth);
+    });
+
+    btnActual.addEventListener('click', () => {
+      mainImg.className = "w-auto h-auto max-w-none rounded shadow-2xl border border-outline-variant/40";
+      zoomIndicator.textContent = "100% (1:1)";
+      updateModeButtons(btnActual);
+    });
+
+    function updateModeButtons(activeBtn) {
+      [btnFitWindow, btnFitWidth, btnActual].forEach(btn => {
+        btn.className = "h-[22px] px-space-sm text-on-surface-variant hover:text-on-surface rounded flex items-center gap-1 text-label-xs font-label-xs transition-colors";
+      });
+      activeBtn.className = "h-[22px] px-space-sm bg-primary-container text-on-primary-container rounded flex items-center gap-1 text-label-xs font-label-xs font-semibold transition-colors";
+    }
+
+    // Keyboard Shortcuts listener
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'i' || e.key === 'I') {
+        toggleInfo();
+      } else if (e.key === 'h' || e.key === 'H') {
+        toggleHud();
+      } else if (e.key === 'f' || e.key === 'F') {
+        btnFitWindow.click();
+      } else if (e.key === 'w' || e.key === 'W') {
+        btnFitWidth.click();
+      } else if (e.key === 'Escape') {
+        window.history.back();
+      }
+    });
+  </script>
+
+
+</body></html>

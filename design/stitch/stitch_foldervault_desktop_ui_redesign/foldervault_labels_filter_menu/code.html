@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FolderVault - Labels Filter</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#001e2d",
+            "background": "#131313",
+            "outline": "#889299",
+            "surface-container-lowest": "#0e0e0e",
+            "on-primary-fixed": "#001e2b",
+            "tertiary": "#bae3ff",
+            "primary": "#b4e4ff",
+            "secondary-fixed-dim": "#e9c400",
+            "secondary": "#fff9ef",
+            "surface-container-high": "#2a2a2a",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#004d67",
+            "primary-fixed-dim": "#74d1ff",
+            "surface": "#131313",
+            "on-secondary": "#3a3000",
+            "surface-container": "#202020",
+            "error-container": "#93000a",
+            "outline-variant": "#3e484e",
+            "on-tertiary": "#00344b",
+            "tertiary-container": "#72cbff",
+            "surface-container-low": "#1b1c1c",
+            "surface-bright": "#393939",
+            "on-secondary-fixed": "#221b00",
+            "inverse-on-surface": "#303030",
+            "surface-variant": "#353535",
+            "on-background": "#e5e2e1",
+            "surface-dim": "#131313",
+            "on-secondary-container": "#725f00",
+            "tertiary-fixed-dim": "#81cfff",
+            "surface-container-highest": "#353535",
+            "on-primary-container": "#005572",
+            "secondary-fixed": "#ffe16d",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "tertiary-fixed": "#c6e7ff",
+            "primary-container": "#60cdff",
+            "secondary-container": "#ffdb3c",
+            "primary-fixed": "#c1e8ff",
+            "on-secondary-fixed-variant": "#544600",
+            "surface-tint": "#74d1ff",
+            "on-surface": "#e5e2e1",
+            "inverse-primary": "#006687",
+            "on-tertiary-fixed-variant": "#004c6b",
+            "on-tertiary-container": "#005577",
+            "inverse-surface": "#e5e2e1",
+            "on-primary": "#003548",
+            "on-surface-variant": "#bdc8cf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xs": "0.125rem",
+            "space-md": "0.5rem",
+            "margin": "0.5rem",
+            "space-xl": "1rem",
+            "space-sm": "0.25rem",
+            "space-lg": "0.75rem",
+            "gutter": "0.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-xs": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+            "body-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-lg": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-xs": ["10px", { "lineHeight": "12px", "letterSpacing": "0.4px", "fontWeight": "600" }],
+            "body-lg": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "headline-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    
+    /* Native Fluent Dark Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3e484e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #505c63;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md select-none overflow-hidden h-screen w-screen flex flex-col antialiased">
+<!-- ================= TOP APP BAR (Shared Component) ================= -->
+<header class="bg-surface-container border-b border-outline-variant transition-colors duration-100 ease-in-out flex justify-between items-center w-full px-space-md h-[34px] flex-shrink-0 z-30 select-none">
+<!-- Left Region: Actions & Nav Search -->
+<div class="flex items-center gap-space-sm h-full">
+<!-- Trailing icon actions: folder_open, refresh, arrow_upward -->
+<button class="flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors duration-100 text-label-sm font-label-sm border border-transparent hover:border-outline-variant" title="Open Root Folder">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="folder_open">folder_open</span>
+<span class="font-medium text-on-surface">Open root</span>
+</button>
+<button class="p-1 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors duration-100 border border-transparent hover:border-outline-variant" title="Refresh Directory">
+<span class="material-symbols-outlined text-[15px]" data-icon="refresh">refresh</span>
+</button>
+<button class="p-1 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors duration-100 border border-transparent hover:border-outline-variant" title="Navigate Upward">
+<span class="material-symbols-outlined text-[15px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+<div class="h-4 w-px bg-outline-variant mx-0.5"></div>
+<!-- Navigation Link: "All levels" (Active as per mapping) -->
+<button class="flex items-center gap-1.5 px-2 py-0.5 text-primary border-b border-primary font-medium text-label-sm font-label-sm transition-colors duration-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_box" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span>All levels</span>
+</button>
+<!-- Global Filter Search Field -->
+<div class="relative flex items-center ml-1">
+<input class="bg-surface-container-low border border-outline-variant rounded-lg text-on-surface placeholder:text-outline text-label-sm font-label-sm h-[24px] pl-2 pr-12 w-52 focus:outline-none focus:border-primary-container" placeholder="Search name or label..." type="text"/>
+<span class="absolute right-1.5 text-outline text-[10px] font-label-xs font-mono pointer-events-none">(Ctrl+F)</span>
+</div>
+</div>
+<!-- Right Region: Links, Filters & Dropdown Anchors -->
+<div class="flex items-center gap-space-sm h-full relative">
+<!-- TRIGGER BUTTON: Labels: all ▾ (Active Dropdown Source) -->
+<div class="relative">
+<button class="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-surface-container-high border border-primary-container text-primary font-medium text-label-sm font-label-sm shadow-sm transition-colors duration-100" id="labelsDropdownTrigger">
+<span>Labels: 2 selected</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant mx-0.5"></div>
+<!-- Navigation Links from Shared Components -->
+<button class="flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-on-surface-variant hover:text-on-surface font-normal text-label-sm font-label-sm transition-colors duration-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="star">star</span>
+<span>Favorites</span>
+</button>
+<label class="flex items-center gap-1 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm cursor-pointer ml-1">
+<input checked="" class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span>Image folders only</span>
+</label>
+<label class="flex items-center gap-1 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm cursor-pointer ml-1">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span>Show hidden</span>
+</label>
+<div class="h-4 w-px bg-outline-variant mx-0.5"></div>
+<!-- Trailing Secondary: Random -->
+<button class="flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface text-label-sm font-label-sm transition-colors duration-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="shuffle">shuffle</span>
+<span>Random</span>
+</button>
+<!-- Trailing Primary: Privacy -->
+<button class="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-error-container text-on-error-container border border-error hover:brightness-110 text-label-sm font-label-sm font-semibold transition-colors duration-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span>
+<span>Privacy</span>
+</button>
+</div>
+</header>
+<!-- ================= SUBHEADER PATH BAR ================= -->
+<div class="h-6 bg-surface-container-lowest border-b border-outline-variant/60 px-space-md flex items-center justify-between text-label-xs font-label-xs flex-shrink-0">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="font-semibold text-on-surface">Photos</span>
+<span class="text-outline">/</span>
+<span>all levels</span>
+<span class="text-outline">·</span>
+<span class="text-tertiary">Filtered by 2 labels (best, travel)</span>
+</div>
+<div class="flex items-center gap-3 text-outline">
+<span>Auto-refresh: On</span>
+<span>Layout: High Density</span>
+</div>
+</div>
+<!-- ================= MAIN EXPLORER WORKSPACE ================= -->
+<main class="flex-1 flex overflow-hidden relative">
+<!-- DATA GRID SECTION (Table View) -->
+<div class="flex-1 flex flex-col bg-surface-container-low overflow-hidden">
+<!-- Table Header -->
+<div class="h-6 bg-surface-container border-b border-outline-variant flex items-center text-label-xs font-label-xs text-on-surface-variant select-none">
+<div class="w-8 flex justify-center items-center border-r border-outline-variant/40">
+<span class="material-symbols-outlined text-[13px] text-outline" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center justify-between border-r border-outline-variant/40">
+<span>Folder</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+<div class="w-20 px-2 text-right border-r border-outline-variant/40">Images</div>
+<div class="w-24 px-2 text-right border-r border-outline-variant/40">Subfolders</div>
+<div class="w-48 px-2 border-r border-outline-variant/40">Labels</div>
+<div class="w-16 px-2 text-right">Views</div>
+<div class="w-2"></div>
+</div>
+<!-- Table Body Row Container -->
+<div class="flex-1 overflow-y-auto divide-y divide-outline-variant/20 font-body-sm text-body-sm">
+<!-- Row 1 -->
+<div class="h-[26px] flex items-center bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Group 10/Part 2</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">5</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1"></div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 2 -->
+<div class="h-[26px] flex items-center bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Group 10/Part 3</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">5</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1"></div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 3 -->
+<div class="h-[26px] flex items-center bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Group 11</span>
+</div>
+<div class="w-20 px-2 text-right text-outline">—</div>
+<div class="w-24 px-2 text-right text-on-surface-variant">3</div>
+<div class="w-48 px-2 flex items-center gap-1"></div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 4: Set 001 with Labels -->
+<div class="h-[26px] flex items-center bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 001</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">39</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#382A18] border border-[#94682E] text-[#FFD285] rounded text-[10px] font-label-xs">best</span>
+<span class="px-1.5 py-0.2 bg-[#2d281e] border border-[#82713f] text-[#ffe29a] rounded text-[10px] font-label-xs">travel</span>
+</div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 5: Set 002 with Labels -->
+<div class="h-[26px] flex items-center bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 002</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">150</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#382A18] border border-[#94682E] text-[#FFD285] rounded text-[10px] font-label-xs">best</span>
+<span class="px-1.5 py-0.2 bg-[#2d281e] border border-[#82713f] text-[#ffe29a] rounded text-[10px] font-label-xs">travel</span>
+</div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 6: Set 003 ACTIVE SELECTION -->
+<div class="h-[26px] flex items-center bg-[#1A4B75] text-white relative transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-primary-container"></div>
+<div class="w-8 flex justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[13px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate font-medium">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="folder">folder</span>
+<span class="truncate">Set 003</span>
+</div>
+<div class="w-20 px-2 text-right font-medium">200</div>
+<div class="w-24 px-2 text-right text-on-surface-variant">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#382A18] border border-[#94682E] text-[#FFD285] rounded text-[10px] font-label-xs">best</span>
+<span class="px-1.5 py-0.2 bg-[#2d281e] border border-[#82713f] text-[#ffe29a] rounded text-[10px] font-label-xs">travel</span>
+</div>
+<div class="w-16 px-2 text-right text-on-surface-variant">0</div>
+</div>
+<!-- Row 7: Set 004 -->
+<div class="h-[26px] flex items-center bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 004</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">21</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#382A18] border border-[#94682E] text-[#FFD285] rounded text-[10px] font-label-xs">best</span>
+<span class="px-1.5 py-0.2 bg-[#2d281e] border border-[#82713f] text-[#ffe29a] rounded text-[10px] font-label-xs">travel</span>
+</div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 8: Set 007 with Star and Views -->
+<div class="h-[26px] flex items-center bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-[#FFD700]">
+<span class="material-symbols-outlined text-[13px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 007</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">131</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#382A18] border border-[#94682E] text-[#FFD285] rounded text-[10px] font-label-xs">best</span>
+<span class="px-1.5 py-0.2 bg-[#2d281e] border border-[#82713f] text-[#ffe29a] rounded text-[10px] font-label-xs">travel</span>
+</div>
+<div class="w-16 px-2 text-right text-on-surface-variant">1</div>
+</div>
+<!-- Row 9: Set 010 Cosplay Label -->
+<div class="h-[26px] flex items-center bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 010</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">125</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#1B3224] border border-[#3E7756] text-[#82E0AA] rounded text-[10px] font-label-xs">cosplay</span>
+</div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+<!-- Row 10: Set 011 -->
+<div class="h-[26px] flex items-center bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="w-8 flex justify-center text-outline">
+<span class="material-symbols-outlined text-[13px]" data-icon="star">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="folder">folder</span>
+<span class="text-on-surface truncate">Set 011</span>
+</div>
+<div class="w-20 px-2 text-right text-on-surface-variant">171</div>
+<div class="w-24 px-2 text-right text-outline">—</div>
+<div class="w-48 px-2 flex items-center gap-1">
+<span class="px-1.5 py-0.2 bg-[#1B3224] border border-[#3E7756] text-[#82E0AA] rounded text-[10px] font-label-xs">cosplay</span>
+</div>
+<div class="w-16 px-2 text-right text-outline">0</div>
+</div>
+</div>
+</div>
+<!-- RIGHT INSPECTOR PANEL (Windows 11 Fluent Sidebar) -->
+<aside class="w-80 bg-surface-container border-l border-outline-variant flex flex-col p-space-lg flex-shrink-0 select-none">
+<!-- Preview Frame -->
+<div class="aspect-[4/3] bg-[#613b23] border border-outline-variant/60 rounded-lg flex flex-col items-center justify-center p-4 relative overflow-hidden shadow-inner">
+<div class="text-headline-lg font-headline-lg text-white font-bold tracking-tight">Set 3 #1</div>
+<div class="text-label-xs font-label-xs text-white/60 mt-1">Resolution: 3840 × 2160</div>
+</div>
+<!-- Metadata & Inspector Controls -->
+<div class="mt-4 flex-1 flex flex-col">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Set 003</h3>
+<p class="text-label-sm font-label-sm text-outline mt-0.5">200 images</p>
+<!-- Inline Label Editor -->
+<div class="mt-3">
+<label class="text-label-xs font-label-xs text-outline block mb-1">Labels (comma separated, Enter to save):</label>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-1.5 text-label-sm font-label-sm text-on-surface">
+            best, travel
+          </div>
+</div>
+<!-- Inspector Action Buttons -->
+<div class="grid grid-cols-3 gap-1.5 mt-4">
+<button class="h-[26px] bg-surface-container-high border border-outline-variant hover:bg-surface-variant rounded-lg text-label-sm font-label-sm text-on-surface transition-colors flex items-center justify-center">
+            Open
+          </button>
+<button class="h-[26px] bg-surface-container-high border border-outline-variant hover:bg-surface-variant rounded-lg text-label-sm font-label-sm text-on-surface transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary-container" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>Unfavorite</span>
+</button>
+<button class="h-[26px] bg-surface-container-high border border-outline-variant hover:bg-surface-variant rounded-lg text-label-sm font-label-sm text-on-surface transition-colors flex items-center justify-center">
+            Hide
+          </button>
+</div>
+<div class="grid grid-cols-2 gap-1.5 mt-1.5">
+<button class="h-[26px] bg-surface-container-high border border-outline-variant hover:bg-surface-variant rounded-lg text-label-sm font-label-sm text-on-surface transition-colors flex items-center justify-center">
+            Add label...
+          </button>
+<button class="h-[26px] bg-surface-container-high border border-outline-variant hover:bg-surface-variant rounded-lg text-label-sm font-label-sm text-on-surface transition-colors flex items-center justify-center">
+            Remove label...
+          </button>
+</div>
+<!-- Partition details -->
+<div class="mt-auto pt-4 border-t border-outline-variant/40 text-label-xs font-label-xs text-outline flex justify-between">
+<span>Path: D:/Vault/Photos/Set_003</span>
+<span>1.84 GB</span>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- MỤC 3.2 MENU LỌC LABELS: Windows 11 Fluent Active Popup Dropdown Menu    -->
+<!-- Positioned directly underneath the 'Labels: all ▾' toolbar trigger       -->
+<!-- ========================================================================= -->
+<div aria-label="Labels Filter Dropdown" class="absolute top-1 right-[245px] w-72 bg-surface-container border border-outline-variant rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.65)] z-50 flex flex-col overflow-hidden backdrop-blur-md" id="labelsFilterMenu" role="menu">
+<!-- 1. Search Bar for Fast Keyboard Filtering -->
+<div class="p-2 border-b border-outline-variant/60 bg-surface-container-high/40">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-[15px] text-outline absolute left-2 pointer-events-none" data-icon="search">search</span>
+<input autofocus="" class="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary-container rounded-lg h-[26px] pl-7 pr-2 text-label-sm font-label-sm text-on-surface placeholder:text-outline focus:outline-none" placeholder="Search labels..." type="text"/>
+</div>
+</div>
+<!-- 2. Quick Action Toggles Bar (Match ALL, no label, Clear) -->
+<div class="px-2.5 py-1.5 border-b border-outline-variant/40 bg-surface-container-low flex items-center justify-between text-label-xs font-label-xs select-none">
+<div class="flex items-center gap-2">
+<!-- Toggle: Match ALL (AND logic) -->
+<label class="flex items-center gap-1.5 text-on-surface cursor-pointer hover:text-primary transition-colors">
+<input checked="" class="rounded-sm bg-surface-container border-outline-variant text-primary-container focus:ring-0 w-3 h-3 cursor-pointer" type="checkbox"/>
+<span class="font-medium">Match ALL</span>
+</label>
+<span class="text-outline/40">|</span>
+<!-- Option: (no label) -->
+<label class="flex items-center gap-1 text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="rounded-sm bg-surface-container border-outline-variant text-primary-container focus:ring-0 w-3 h-3 cursor-pointer" type="checkbox"/>
+<span class="italic">(no label)</span>
+</label>
+</div>
+<!-- Action: Clear filter -->
+<button class="text-primary hover:text-primary-container hover:underline font-semibold transition-colors">
+          Clear
+        </button>
+</div>
+<!-- 3. Scrollable Multi-Select Label Checklist -->
+<div class="max-h-64 overflow-y-auto p-1 divide-y divide-outline-variant/10 text-label-sm font-label-sm">
+<!-- Item 1: 'best' (Active/Checked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input checked="" class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Amber -->
+<span class="w-2.5 h-2.5 rounded-full bg-amber-400 ring-1 ring-amber-500/40 flex-shrink-0"></span>
+<span class="text-on-surface group-hover:text-white truncate font-medium">best</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            84
+          </span>
+</label>
+<!-- Item 2: 'travel' (Active/Checked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input checked="" class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Cyan -->
+<span class="w-2.5 h-2.5 rounded-full bg-cyan-400 ring-1 ring-cyan-500/40 flex-shrink-0"></span>
+<span class="text-on-surface group-hover:text-white truncate font-medium">travel</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            42
+          </span>
+</label>
+<!-- Item 3: 'cosplay' (Unchecked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Emerald -->
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-1 ring-emerald-500/40 flex-shrink-0"></span>
+<span class="text-on-surface-variant group-hover:text-on-surface truncate">cosplay</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            118
+          </span>
+</label>
+<!-- Item 4: 'landscape' (Unchecked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Purple -->
+<span class="w-2.5 h-2.5 rounded-full bg-purple-400 ring-1 ring-purple-500/40 flex-shrink-0"></span>
+<span class="text-on-surface-variant group-hover:text-on-surface truncate">landscape</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            56
+          </span>
+</label>
+<!-- Item 5: 'archived' (Unchecked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Slate -->
+<span class="w-2.5 h-2.5 rounded-full bg-slate-400 ring-1 ring-slate-500/40 flex-shrink-0"></span>
+<span class="text-on-surface-variant group-hover:text-on-surface truncate">archived</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            12
+          </span>
+</label>
+<!-- Item 6: 'favorites' (Unchecked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Rose -->
+<span class="w-2.5 h-2.5 rounded-full bg-rose-400 ring-1 ring-rose-500/40 flex-shrink-0"></span>
+<span class="text-on-surface-variant group-hover:text-on-surface truncate">favorites</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            2
+          </span>
+</label>
+<!-- Item 7: 'work' (Unchecked) -->
+<label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 min-w-0">
+<input class="rounded-sm bg-surface-container-low border-outline-variant text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer" type="checkbox"/>
+<!-- Color Dot Chip: Sky Blue -->
+<span class="w-2.5 h-2.5 rounded-full bg-sky-400 ring-1 ring-sky-500/40 flex-shrink-0"></span>
+<span class="text-on-surface-variant group-hover:text-on-surface truncate">work</span>
+</div>
+<span class="text-label-xs font-label-xs text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded border border-outline-variant/40 ml-2 flex-shrink-0">
+            15
+          </span>
+</label>
+</div>
+<!-- 4. Keyboard Accelerator Footer Hint -->
+<div class="px-2.5 py-1.5 bg-surface-container-lowest border-t border-outline-variant/60 flex items-center justify-between text-[10px] text-outline font-label-xs">
+<span class="flex items-center gap-1">
+<span class="px-1 py-0.5 bg-surface-container border border-outline-variant rounded font-mono text-[9px] text-on-surface-variant">Space</span>
+<span>to toggle</span>
+</span>
+<span class="flex items-center gap-1">
+<span class="px-1 py-0.5 bg-surface-container border border-outline-variant rounded font-mono text-[9px] text-on-surface-variant">Esc</span>
+<span>to close</span>
+</span>
+</div>
+</div>
+</main>
+<!-- ================= FOOTER / STATUS BAR (Shared Component) ================= -->
+<footer class="fixed bottom-0 left-0 w-full z-40 flex justify-between items-center px-space-md h-[22px] text-on-surface-variant bg-surface-container-lowest border-t border-outline-variant text-label-xs font-label-xs select-none">
+<!-- Left Region: Statistics Counters (Literal casing and wording from JSON) -->
+<div class="truncate text-on-surface-variant">
+      636 folders · 624 with images · 58,531 images · 2 favorites · 0 hidden | showing 636
+    </div>
+<!-- Right Region: Status Indicators & Version (From JSON) -->
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-on-surface font-semibold hover:text-on-surface cursor-pointer transition-colors duration-100">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+<span>Ready</span>
+</span>
+<span class="text-outline">|</span>
+<span class="text-on-surface-variant font-normal hover:text-on-surface cursor-pointer transition-colors duration-100">
+        v1.4.2
+      </span>
+</div>
+</footer>
+<!-- Native Fluent Toggle Script for demo interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const trigger = document.getElementById('labelsDropdownTrigger');
+      const menu = document.getElementById('labelsFilterMenu');
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body></html>

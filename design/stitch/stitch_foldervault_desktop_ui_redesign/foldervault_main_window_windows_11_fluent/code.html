@@ -1,0 +1,668 @@
+<!DOCTYPE html><html class="dark h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FolderVault - Professional Media Archivist</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-container": "#005572",
+            "on-background": "#e5e2e1",
+            "on-surface": "#e5e2e1",
+            "on-tertiary-fixed": "#001e2d",
+            "primary": "#b4e4ff",
+            "surface-container-high": "#2a2a2a",
+            "tertiary-fixed": "#c6e7ff",
+            "on-primary-fixed": "#001e2b",
+            "surface-container-highest": "#353535",
+            "tertiary": "#bae3ff",
+            "on-tertiary-fixed-variant": "#004c6b",
+            "tertiary-container": "#72cbff",
+            "surface-bright": "#393939",
+            "outline": "#889299",
+            "surface-container-lowest": "#0e0e0e",
+            "on-tertiary": "#00344b",
+            "surface-tint": "#74d1ff",
+            "surface-container-low": "#1b1c1c",
+            "on-secondary-fixed-variant": "#544600",
+            "inverse-surface": "#e5e2e1",
+            "surface-variant": "#353535",
+            "surface-container": "#202020",
+            "on-primary": "#003548",
+            "on-error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#81cfff",
+            "primary-container": "#60cdff",
+            "on-secondary-container": "#725f00",
+            "on-surface-variant": "#bdc8cf",
+            "on-primary-fixed-variant": "#004d67",
+            "secondary": "#fff9ef",
+            "secondary-fixed": "#ffe16d",
+            "inverse-on-surface": "#303030",
+            "inverse-primary": "#006687",
+            "secondary-fixed-dim": "#e9c400",
+            "background": "#131313",
+            "secondary-container": "#ffdb3c",
+            "error-container": "#93000a",
+            "on-error": "#690005",
+            "on-tertiary-container": "#005577",
+            "on-secondary": "#3a3000",
+            "surface-dim": "#131313",
+            "surface": "#131313",
+            "on-secondary-fixed": "#221b00",
+            "primary-fixed-dim": "#74d1ff",
+            "error": "#ffb4ab",
+            "outline-variant": "#3e484e",
+            "primary-fixed": "#c1e8ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1rem",
+            "margin": "0.5rem",
+            "space-xs": "0.125rem",
+            "space-sm": "0.25rem",
+            "gutter": "0.5rem",
+            "space-md": "0.5rem",
+            "space-lg": "0.75rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "label-xs": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "body-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-xs": ["10px", { "lineHeight": "12px", "letterSpacing": "0.4px", "fontWeight": "600" }],
+            "body-lg": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "body-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-lg": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "headline-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-size: 15px;
+      line-height: 1;
+      width: 15px;
+      height: 15px;
+      vertical-align: middle;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Fluent scrollbar customization */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #181818;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3e484e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5a646a;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface h-full flex flex-col overflow-hidden select-none font-body-sm text-body-sm">
+<!-- Windows 11 Native Shell Window Caption Bar -->
+<header class="h-[30px] bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-space-md shrink-0">
+<div class="flex items-center space-x-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[14px]">folder_special</span>
+<span class="font-label-md text-label-md font-semibold tracking-tight text-on-surface">FolderVault</span>
+<span class="text-outline text-label-xs mx-1">|</span>
+<!-- Breadcrumb Path Navigator -->
+<nav class="flex items-center space-x-1 font-label-xs text-label-xs text-on-surface-variant">
+<span class="hover:text-primary cursor-pointer px-1 py-0.5 rounded-lg hover:bg-surface-container-high transition-colors duration-100">Photos</span>
+<span class="text-outline text-[9px]">›</span>
+<span class="text-on-surface font-semibold bg-surface-container px-1.5 py-0.5 rounded-lg border border-outline-variant">All levels</span>
+</nav>
+</div>
+<!-- Window System Controls -->
+<div class="flex items-center h-full -mr-space-md">
+<button class="h-full px-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors inline-flex items-center justify-center" title="Minimize">
+<span class="material-symbols-outlined text-[13px]">remove</span>
+</button>
+<button class="h-full px-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors inline-flex items-center justify-center" title="Maximize">
+<span class="material-symbols-outlined text-[12px]">crop_square</span>
+</button>
+<button class="h-full px-3.5 text-on-surface-variant hover:text-secondary hover:bg-error-container transition-colors inline-flex items-center justify-center" title="Close">
+<span class="material-symbols-outlined text-[13px]">close</span>
+</button>
+</div>
+</header>
+<!-- TopNavBar (Shared Component implementation according to JSON Blueprint) -->
+<section class="bg-surface-container dark:bg-surface-container border-b border-outline-variant dark:border-outline-variant flex justify-between items-center w-full px-space-md h-[34px] shrink-0 gap-2">
+<!-- Left Toolbar Cluster: Folder operations + Search -->
+<div class="flex items-center space-x-space-sm grow max-w-2xl">
+<div class="flex items-center space-x-1">
+<button class="h-[24px] px-2 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:bg-surface-container-highest transition-colors duration-100 flex items-center space-x-1 font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-primary-container">folder_open</span>
+<span class="">Open root</span>
+<span class="text-outline ml-0.5 text-[9px]">(Alt+O)</span>
+</button>
+<button class="h-[24px] w-[24px] rounded-lg hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors duration-100" title="Rescan (F5)">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+<button class="h-[24px] w-[24px] rounded-lg hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors duration-100" title="Up directory (Alt+Up)">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+<div class="h-3.5 w-px bg-outline-variant mx-1"></div>
+<!-- Search Bar -->
+<div class="relative grow max-w-xs">
+<div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-[13px]">search</span>
+</div>
+<input class="w-full h-[24px] pl-6 pr-12 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:border-primary-container focus:ring-0 focus:outline-none transition-colors duration-100" placeholder="Search name or label... (Ctrl+F)" type="text">
+<span class="absolute right-1.5 top-1 font-label-xs text-[9px] text-outline bg-surface-container px-1 py-0.2 rounded border border-outline-variant pointer-events-none">Ctrl+F</span>
+</div>
+<!-- Navigation Links from JSON ("All levels", "Favorites", "Image folders only", "Show hidden") -->
+<div class="flex items-center space-x-2 pl-2">
+<button class="text-primary dark:text-primary border-b border-primary dark:border-primary font-medium font-label-sm text-label-sm px-1 py-0.5 flex items-center space-x-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container inline-block"></span>
+<span class="">All levels</span>
+</button>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface font-normal font-label-sm text-label-sm px-1 py-0.5 flex items-center space-x-1">
+<span class="material-symbols-outlined text-secondary-fixed text-[13px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="">Favorites</span>
+</button>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface font-normal font-label-sm text-label-sm px-1 py-0.5 flex items-center space-x-1">
+<span class="material-symbols-outlined text-[13px] text-primary">check_box</span>
+<span class="">Image folders only</span>
+</button>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface font-normal font-label-sm text-label-sm px-1 py-0.5 flex items-center space-x-1">
+<span class="material-symbols-outlined text-[13px] text-outline">check_box_outline_blank</span>
+<span class="">Show hidden</span>
+</button>
+</div>
+</div>
+<!-- Right Controls: Actions & Privacy -->
+<div class="flex items-center space-x-1.5 shrink-0">
+<div class="flex items-center space-x-1 bg-surface-container-low px-1.5 py-0.5 rounded-lg border border-outline-variant font-label-xs text-label-xs text-on-surface-variant">
+<span class="">Labels: all</span>
+<span class="material-symbols-outlined text-[11px]">arrow_drop_down</span>
+</div>
+<button class="h-[24px] px-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface flex items-center space-x-1 border border-outline-variant font-label-xs text-label-xs transition-colors duration-100">
+<span class="material-symbols-outlined text-tertiary-container">shuffle</span>
+<span class="">Random</span>
+</button>
+<button class="h-[24px] px-2 rounded-lg bg-secondary-container/20 border border-secondary-fixed/40 text-secondary-fixed hover:bg-secondary-container/30 flex items-center space-x-1 font-label-xs text-label-xs font-semibold transition-colors duration-100">
+<span class="material-symbols-outlined text-[13px]">shield</span>
+<span class="">Privacy</span>
+</button>
+</div>
+</section>
+<!-- Main Split Layout (Desktop Explorer Canvas) -->
+<main class="flex-1 flex overflow-hidden bg-background">
+<!-- Left Column: High-Density QTableView Data Grid (72% width) -->
+<section class="flex-1 flex flex-col overflow-hidden border-r border-outline-variant bg-surface-container-low">
+<!-- Table Header Bar -->
+<div class="h-[24px] bg-surface-container border-b border-outline-variant flex items-center font-label-xs text-label-xs text-outline font-semibold select-none shrink-0 px-2">
+<div class="w-7 text-center shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-1"><span class="">Cover &amp; Folder</span>
+<span class="material-symbols-outlined text-[10px] text-primary">arrow_upward</span></div>
+<div class="w-16 text-right px-2">Images</div>
+<div class="w-20 text-right px-2">Subfolders</div>
+<div class="w-48 px-3">Labels</div>
+<div class="w-14 text-center px-1">Views</div>
+</div>
+<!-- Table Content Body with alternating desktop rows -->
+<div class="flex-1 overflow-y-auto divide-y divide-[#24292d]"><!-- Row: Group 10/Part 2 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant group-hover:text-outline">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-outline text-[12px]">folder</span>
+</div>
+<span class="truncate">Group 10/Part 2</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface-variant">5</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Group 10/Part 3 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant group-hover:text-outline">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-outline text-[12px]">folder</span>
+</div>
+<span class="truncate">Group 10/Part 3</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface-variant">5</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Group 11 (Subfolder container) -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate text-on-surface">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[12px]">folder_copy</span>
+</div>
+<span class="truncate font-medium">Group 11</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-20 text-right px-2 font-label-xs text-primary-container font-semibold">3</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Group 11/Part 1 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group pl-2">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate pl-2">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-outline text-[12px]">folder</span>
+</div>
+<span class="truncate">Group 11/Part 1</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface-variant">5</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Group 11/Part 2 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group pl-2">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate pl-2">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-outline text-[12px]">folder</span>
+</div>
+<span class="truncate">Group 11/Part 2</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface-variant">5</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Group 12 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[12px]">folder_copy</span>
+</div>
+<span class="truncate font-medium">Group 12</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-20 text-right px-2 font-label-xs text-primary-container font-semibold">3</div>
+<div class="w-48 px-3 truncate"></div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 001 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant group-hover:text-outline">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 001 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 001</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">39</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 002 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant group-hover:text-outline">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 002 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 002</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">150</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 003 (ACTIVE / SELECTED ROW) -->
+<div class="flex items-center h-[30px] px-2 bg-[#1A4B75] text-secondary font-body-sm text-body-sm cursor-pointer relative shadow-inner">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-primary-container"></div>
+<div class="w-7 text-center shrink-0 pl-1 text-secondary-fixed">
+<span class="material-symbols-outlined text-[13px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate font-semibold">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-primary/50 shrink-0 overflow-hidden relative shadow-sm ring-1 ring-primary/40">
+<img class="w-full h-full object-cover" alt="Set 003 album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary text-[13px]">folder_open</span>
+<span class="truncate">Set 003</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs font-semibold text-secondary">200</div>
+<div class="w-20 text-right px-2 font-label-xs text-primary-fixed-dim">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-primary-fixed-dim font-label-xs">—</div>
+</div>
+<!-- Row: Set 004 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 004 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 004</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">21</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 005 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 005 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 005</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">70</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 007 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-[#FFD700]">
+<span class="material-symbols-outlined text-[13px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 007 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate font-medium">Set 007</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface font-semibold">131</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] leading-none inline-flex items-center">best</span>
+<span class="h-[16px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] leading-none inline-flex items-center">travel</span>
+</div>
+<div class="w-14 text-center px-1 text-primary-container font-label-xs font-semibold">1</div>
+</div>
+<!-- Row: Set 010 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 010 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 010</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">125</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#1B3224] border border-[#3E7756] text-[#82E0AA] font-label-xs text-[10px] leading-none inline-flex items-center">cosplay</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 011 -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 011 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 011</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">171</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#1B3224] border border-[#3E7756] text-[#82E0AA] font-label-xs text-[10px] leading-none inline-flex items-center">cosplay</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Row: Set 012 -->
+<div class="flex items-center h-[30px] px-2 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer group">
+<div class="w-7 text-center shrink-0 text-outline-variant">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate">
+<div class="w-7 h-[20px] rounded bg-surface-container-lowest border border-outline-variant shrink-0 overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" alt="Set 012 cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+</div>
+<span class="material-symbols-outlined text-primary-container text-[13px]">folder</span>
+<span class="truncate">Set 012</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-on-surface">102</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-[#1B3224] border border-[#3E7756] text-[#82E0AA] font-label-xs text-[10px] leading-none inline-flex items-center">cosplay</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div>
+<!-- Dimmed Hidden Directory Demonstrator -->
+<div class="flex items-center h-[30px] px-2 hover:bg-surface-container-high transition-colors duration-75 text-on-surface font-body-sm text-body-sm cursor-pointer opacity-50 border-dashed border-y border-[#353535]">
+<div class="w-7 text-center shrink-0 text-outline">
+<span class="material-symbols-outlined text-[13px]">visibility_off</span>
+</div>
+<div class="flex-1 px-2 flex items-center space-x-2 truncate italic">
+<div class="w-7 h-[20px] rounded bg-surface-container-highest border border-outline-variant shrink-0 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-outline text-[12px]">folder_off</span>
+</div>
+<span class="truncate">.vault_private_archive</span>
+</div>
+<div class="w-16 text-right px-2 font-label-xs text-outline">48</div>
+<div class="w-20 text-right px-2 font-label-xs text-outline">—</div>
+<div class="w-48 px-3 flex items-center space-x-1 truncate">
+<span class="h-[16px] px-1.5 rounded bg-surface-container-highest border border-outline-variant text-outline font-label-xs text-[10px] leading-none inline-flex items-center">archived</span>
+</div>
+<div class="w-14 text-center px-1 text-outline font-label-xs">—</div>
+</div></div>
+</section>
+<!-- Right Column: Detail Inspector Panel (28% width, fixed desktop inspector dock) -->
+<aside class="w-[340px] shrink-0 bg-surface-container border-l border-outline-variant flex flex-col justify-between overflow-y-auto p-3">
+<div class="flex flex-col space-y-3">
+<!-- Visual Cover Image Preview Container -->
+<div class="relative w-full aspect-[4/3] rounded-lg bg-surface-container-lowest border border-outline-variant overflow-hidden group shadow-md flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A refined digital preview photograph of an organized travel and landscape collection showcasing warm copper tones, glowing amber sunset lights over scenic mountain horizons, high resolution, minimalist composition, balanced color grading, and modern editorial styling tailored for a sleek dark mode desktop interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKNEZTJvridH7r1DpnTwNRD00ThtF8lDqv0kQCmWDTb3uaktyBDp7XSsCZIUFuJ_l8nQ98DdEgeIyH-v8tRrmJP2wQT1RJUoM6hrldjfuHwzpsCMb381p75i1P0RGP95R0_MaWuaMHO74ww2_qE_wzrCroXmyXndINSiQcgn46GSOmh-13tOb0225fbKFhP6TVAR9xjORJSZpWQbmJeB2_sfLP_HGKb5u1VLfmN4">
+<!-- Translucent acrylic badge overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+<div class="absolute bottom-2 left-2 flex items-center space-x-1 bg-surface-container-lowest/80 backdrop-blur-sm px-2 py-0.5 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-primary-container text-[12px]">photo_library</span>
+<span class="font-headline-sm text-headline-sm text-secondary font-bold">Set 3 &nbsp;#1</span>
+</div>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/80 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-label-xs text-on-surface-variant border border-outline-variant">
+            1920 × 1080 · JPG
+          </div>
+</div>
+<!-- Folder Metadata Header -->
+<div class="border-b border-outline-variant pb-2.5">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface flex items-center space-x-1.5">
+<span class="">Set 003</span>
+<span class="material-symbols-outlined text-secondary-fixed text-[15px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</h2>
+<span class="bg-primary/10 border border-primary/30 text-primary-container font-label-xs text-label-xs px-2 py-0.5 rounded-full">
+              200 images
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">
+            428 MB total • Last scanned yesterday 18:42
+          </p>
+</div>
+<!-- Interactive Tag / Label Editor -->
+<div class="flex flex-col space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-xs text-label-xs text-outline font-semibold">LABELS (COMMA SEPARATED)</label>
+<span class="font-label-xs text-[9px] text-outline">Enter to save</span>
+</div>
+<!-- Active Tag Pills in Input Field -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-1.5 flex flex-wrap gap-1 items-center min-h-[34px] focus-within:border-primary-container transition-colors duration-100">
+<div class="h-[18px] px-1.5 rounded bg-[#382A18] border border-[#94682E] text-[#FFD285] font-label-xs text-[10px] inline-flex items-center space-x-1">
+<span class="">best</span>
+<button class="hover:text-secondary inline-flex items-center">
+<span class="material-symbols-outlined text-[10px]">close</span>
+</button>
+</div>
+<div class="h-[18px] px-1.5 rounded bg-[#133041] border border-[#1e5879] text-[#7cd2ff] font-label-xs text-[10px] inline-flex items-center space-x-1">
+<span class="">travel</span>
+<button class="hover:text-secondary inline-flex items-center">
+<span class="material-symbols-outlined text-[10px]">close</span>
+</button>
+</div>
+<input class="bg-transparent border-none p-0 text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:ring-0 grow min-w-[70px] h-[18px]" placeholder="Add label..." type="text">
+</div>
+<!-- Quick Suggestion Pill Row -->
+<div class="flex items-center space-x-1 pt-0.5 font-label-xs text-[10px] text-outline">
+<span class="">Suggestions:</span>
+<button class="hover:text-primary px-1 py-0.2 rounded hover:bg-surface-container-high transition-colors">+ landscape</button>
+<button class="hover:text-primary px-1 py-0.2 rounded hover:bg-surface-container-high transition-colors">+ 4k</button>
+<button class="hover:text-primary px-1 py-0.2 rounded hover:bg-surface-container-high transition-colors">+ curated</button>
+</div>
+</div>
+<!-- Inspector Actions Grid -->
+<div class="grid grid-cols-3 gap-1.5 pt-1">
+<button class="h-[28px] rounded-lg bg-[#0078D4] hover:bg-[#1084D9] text-secondary font-label-xs text-label-xs font-semibold flex items-center justify-center space-x-1 shadow-sm transition-colors duration-100 col-span-1">
+<span class="material-symbols-outlined text-[13px]">folder_open</span>
+<span class="">Open</span>
+</button>
+<button class="h-[28px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface font-label-xs text-label-xs flex items-center justify-center space-x-1 transition-colors duration-100 col-span-1">
+<span class="material-symbols-outlined text-secondary-fixed text-[13px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="">Unfavorite</span>
+</button>
+<button class="h-[28px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface font-label-xs text-label-xs flex items-center justify-center space-x-1 transition-colors duration-100 col-span-1">
+<span class="material-symbols-outlined text-outline text-[13px]">visibility_off</span>
+<span class="">Hide</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-1.5">
+<button class="h-[24px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface-variant hover:text-on-surface font-label-xs text-label-xs flex items-center justify-center space-x-1 transition-colors duration-100">
+<span class="material-symbols-outlined text-[12px]">bookmark_add</span>
+<span class="">Add label...</span>
+</button>
+<button class="h-[24px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface-variant hover:text-on-surface font-label-xs text-label-xs flex items-center justify-center space-x-1 transition-colors duration-100">
+<span class="material-symbols-outlined text-[12px]">bookmark_remove</span>
+<span class="">Remove label...</span>
+</button>
+</div>
+<!-- Detailed Properties Card -->
+<div class="bg-surface-container-lowest/60 rounded-lg p-2.5 border border-outline-variant flex flex-col space-y-2 mt-2">
+<span class="font-label-xs text-label-xs text-outline font-semibold">DIRECTORY PROPERTIES</span>
+<div class="flex justify-between items-center text-label-xs font-label-xs border-b border-[#2a2a2a] pb-1">
+<span class="text-on-surface-variant">Absolute Path</span>
+<span class="text-on-surface font-mono text-[10px] truncate max-w-[170px]" title="D:/Archive/Photos/Set_003">.../Photos/Set_003</span>
+</div>
+<div class="flex justify-between items-center text-label-xs font-label-xs border-b border-[#2a2a2a] pb-1">
+<span class="text-on-surface-variant">Image Format</span>
+<span class="text-on-surface">JPEG (198), PNG (2)</span>
+</div>
+<div class="flex justify-between items-center text-label-xs font-label-xs border-b border-[#2a2a2a] pb-1">
+<span class="text-on-surface-variant">Indexed Subfolders</span>
+<span class="text-on-surface">0 directories</span>
+</div>
+<div class="flex justify-between items-center text-label-xs font-label-xs">
+<span class="text-on-surface-variant">Security Flag</span>
+<span class="text-primary-container font-semibold">Public Vault</span>
+</div>
+</div>
+</div>
+<!-- Quick Hint Footer in Inspector -->
+<div class="pt-2 text-center text-[10px] text-outline font-label-xs border-t border-outline-variant">
+        Press <kbd class="px-1 py-0.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-mono">Space</kbd> for rapid carousel preview
+      </div>
+</aside>
+</main>
+<!-- Footer (Shared Component Implementation according to JSON Blueprint) -->
+<footer class="fixed bottom-0 left-0 w-full z-40 flex justify-between items-center px-space-md h-[22px] text-on-surface-variant dark:text-on-surface-variant text-label-xs font-label-xs bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline-variant select-none">
+<!-- Copyright / Stats Text verbatim from JSON -->
+<div class="flex items-center space-x-1.5 truncate">
+<span class="text-on-surface-variant dark:text-on-surface-variant font-normal">
+        636 folders · 624 with images · 58,531 images · 2 favorites · 0 hidden | showing 636
+      </span>
+</div>
+<!-- Trailing System Indicators and Links from JSON ("Ready", "v1.4.2") -->
+<div class="flex items-center space-x-3 shrink-0">
+<div class="flex items-center space-x-1 text-on-surface dark:text-on-surface font-semibold hover:text-on-surface dark:hover:text-on-surface cursor-pointer">
+<span class="w-1.5 h-1.5 rounded-full bg-[#82E0AA] inline-block animate-pulse"></span>
+<span class="">Ready</span>
+</div>
+<div class="h-2.5 w-px bg-outline-variant"></div>
+<div class="text-on-surface-variant dark:text-on-surface-variant font-normal hover:text-on-surface dark:hover:text-on-surface cursor-pointer">
+<span class="">v1.4.2</span>
+</div>
+</div>
+</footer>
+
+
+</body></html>

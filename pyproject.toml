@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foldervault"
+version = "0.1.0"
+description = "Windows desktop library manager for comic / image folders"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "PySide6>=6.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-qt>=4.4",
+    "ruff>=0.6",
+    "pyinstaller>=6.10",
+]
+
+[project.scripts]
+foldervault = "foldervault.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+# Line length is enforced by `ruff format`; long string literals are allowed.
+ignore = ["E501", "SIM102", "SIM105", "UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"

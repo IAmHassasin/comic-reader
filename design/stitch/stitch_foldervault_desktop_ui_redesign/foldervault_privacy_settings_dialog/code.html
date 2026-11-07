@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FolderVault - Privacy &amp; Explorer Protection</title>
+<!-- Material Symbols Outlined Font -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter & Segoe UI font stack -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatim from instructions -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#001e2d",
+            "background": "#131313",
+            "outline": "#889299",
+            "surface-container-lowest": "#0e0e0e",
+            "on-primary-fixed": "#001e2b",
+            "tertiary": "#bae3ff",
+            "primary": "#b4e4ff",
+            "secondary-fixed-dim": "#e9c400",
+            "secondary": "#fff9ef",
+            "surface-container-high": "#2a2a2a",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#004d67",
+            "primary-fixed-dim": "#74d1ff",
+            "surface": "#131313",
+            "on-secondary": "#3a3000",
+            "surface-container": "#202020",
+            "error-container": "#93000a",
+            "outline-variant": "#3e484e",
+            "on-tertiary": "#00344b",
+            "tertiary-container": "#72cbff",
+            "surface-container-low": "#1b1c1c",
+            "surface-bright": "#393939",
+            "on-secondary-fixed": "#221b00",
+            "inverse-on-surface": "#303030",
+            "surface-variant": "#353535",
+            "on-background": "#e5e2e1",
+            "surface-dim": "#131313",
+            "on-secondary-container": "#725f00",
+            "tertiary-fixed-dim": "#81cfff",
+            "surface-container-highest": "#353535",
+            "on-primary-container": "#005572",
+            "secondary-fixed": "#ffe16d",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "tertiary-fixed": "#c6e7ff",
+            "primary-container": "#60cdff",
+            "secondary-container": "#ffdb3c",
+            "primary-fixed": "#c1e8ff",
+            "on-secondary-fixed-variant": "#544600",
+            "surface-tint": "#74d1ff",
+            "on-surface": "#e5e2e1",
+            "inverse-primary": "#006687",
+            "on-tertiary-fixed-variant": "#004c6b",
+            "on-tertiary-container": "#005577",
+            "inverse-surface": "#e5e2e1",
+            "on-primary": "#003548",
+            "on-surface-variant": "#bdc8cf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xs": "0.125rem",
+            "space-md": "0.5rem",
+            "margin": "0.5rem",
+            "space-xl": "1rem",
+            "space-sm": "0.25rem",
+            "space-lg": "0.75rem",
+            "gutter": "0.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter", "Segoe UI", "sans-serif"],
+            "label-md": ["Inter", "Segoe UI", "sans-serif"],
+            "body-sm": ["Inter", "Segoe UI", "sans-serif"],
+            "body-md": ["Inter", "Segoe UI", "sans-serif"],
+            "headline-sm": ["Inter", "Segoe UI", "sans-serif"],
+            "headline-lg": ["Inter", "Segoe UI", "sans-serif"],
+            "label-xs": ["Inter", "Segoe UI", "sans-serif"],
+            "body-lg": ["Inter", "Segoe UI", "sans-serif"],
+            "headline-md": ["Inter", "Segoe UI", "sans-serif"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+            "body-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "headline-lg": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-xs": ["10px", { "lineHeight": "12px", "letterSpacing": "0.4px", "fontWeight": "600" }],
+            "body-lg": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "headline-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Desktop Qt / Windows 11 Fluent App Scrollbar & Custom micro-toggles */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #383838;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4d4d4d;
+    }
+    
+    .fluent-switch {
+      position: relative;
+      display: inline-block;
+      width: 32px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .fluent-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .fluent-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #2c2c2c;
+      border: 1px solid #3e484e;
+      transition: .15s ease-in-out;
+      border-radius: 9px;
+    }
+    .fluent-slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 2px;
+      bottom: 2px;
+      background-color: #bdc8cf;
+      transition: .15s ease-in-out;
+      border-radius: 50%;
+    }
+    input:checked + .fluent-slider {
+      background-color: #0078D4;
+      border-color: #60CDFF;
+    }
+    input:checked + .fluent-slider:before {
+      transform: translateX(14px);
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md select-none overflow-hidden h-screen w-screen flex flex-col justify-between antialiased">
+<!-- ================= TOP APP BAR (Shared Component JSON anchor) ================= -->
+<header class="bg-surface-container docked full-width top-0 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-space-md h-[34px] z-20 shrink-0">
+<!-- Left Cluster: Logo & Search -->
+<div class="flex items-center space-x-space-md">
+<div class="flex items-center space-x-space-xs text-label-md font-label-md font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="folder_open">folder_open</span>
+<span>FolderVault</span>
+</div>
+<div class="flex items-center space-x-space-xs ml-space-sm">
+<button class="w-[24px] h-[24px] flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded transition-colors duration-100 ease-in-out" title="Open Root">
+<span class="material-symbols-outlined text-[15px]" data-icon="folder_open">folder_open</span>
+</button>
+<button class="w-[24px] h-[24px] flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded transition-colors duration-100 ease-in-out" title="Reload Directory">
+<span class="material-symbols-outlined text-[15px]" data-icon="refresh">refresh</span>
+</button>
+<button class="w-[24px] h-[24px] flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded transition-colors duration-100 ease-in-out" title="Parent Folder">
+<span class="material-symbols-outlined text-[15px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+<!-- Quick Search Bar with Embedded Accelerator indicator -->
+<div class="relative flex items-center ml-space-xs">
+<input class="bg-surface-container-low border border-outline-variant rounded h-[22px] px-space-md pr-16 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:ring-0 outline-none w-56" placeholder="Search name or label... (Ctrl+F)" type="text"/>
+<span class="absolute right-2 text-label-xs font-label-xs text-outline pointer-events-none">Ctrl+F</span>
+</div>
+</div>
+<!-- Center/Right Navigation Links (From JSON) -->
+<div class="flex items-center space-x-space-lg">
+<nav class="flex items-center space-x-space-md text-label-sm font-label-sm">
+<a class="text-primary border-b border-primary font-medium px-space-xs py-[2px] transition-colors duration-100 ease-in-out" href="#">All levels</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal px-space-xs py-[2px] transition-colors duration-100 ease-in-out flex items-center space-x-space-xs" href="#">
+<span>Favorites</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal px-space-xs py-[2px] transition-colors duration-100 ease-in-out" href="#">Image folders only</a>
+<a class="text-on-surface-variant hover:text-on-surface font-normal px-space-xs py-[2px] transition-colors duration-100 ease-in-out" href="#">Show hidden</a>
+</nav>
+<div class="h-3 w-[1px] bg-outline-variant"></div>
+<!-- Trailing Actions (Privacy Active modal state indicator) -->
+<div class="flex items-center space-x-space-sm">
+<button class="flex items-center space-x-space-xs px-space-md py-[2px] h-[22px] rounded text-label-sm font-label-sm bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors duration-100">
+<span class="material-symbols-outlined text-[14px]" data-icon="shuffle">shuffle</span>
+<span>Random</span>
+</button>
+<button class="flex items-center space-x-space-xs px-space-md py-[2px] h-[22px] rounded text-label-sm font-label-sm bg-primary-container text-on-primary-container font-semibold transition-colors duration-100 border border-primary">
+<span class="material-symbols-outlined text-[14px]" data-icon="shield">shield</span>
+<span>Privacy</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE AREA (Underlying Tabular Canvas + Inspector Panel) ================= -->
+<main class="relative flex-1 flex w-full overflow-hidden bg-background">
+<!-- Left Table/Directory Canvas (Simulating the user's high-density Qt table) -->
+<div class="flex-1 flex flex-col border-r border-outline-variant overflow-hidden opacity-45 pointer-events-none">
+<!-- Breadcrumb Bar -->
+<div class="h-[24px] bg-surface-container-low px-space-md border-b border-outline-variant flex items-center text-label-xs font-label-xs text-on-surface-variant">
+<span class="text-on-surface font-medium">Photos</span>
+<span class="mx-space-xs text-outline">/</span>
+<span>all levels</span>
+</div>
+<!-- Table Header -->
+<div class="h-[24px] bg-surface-container border-b border-outline-variant flex items-center px-space-md text-label-xs font-label-xs text-outline">
+<div class="w-7 text-center">★</div>
+<div class="flex-1 px-space-sm">Folder</div>
+<div class="w-16 text-right px-space-sm">Images</div>
+<div class="w-16 text-right px-space-sm">Subfolders</div>
+<div class="w-48 px-space-md">Labels</div>
+<div class="w-14 text-right px-space-sm">Views</div>
+</div>
+<!-- Simulated Rows -->
+<div class="flex-1 divide-y divide-[#262626] overflow-hidden text-body-sm font-body-sm">
+<div class="flex items-center h-[24px] px-space-md bg-surface-container hover:bg-surface-container-high">
+<div class="w-7 text-center text-outline">☆</div>
+<div class="flex-1 px-space-sm flex items-center space-x-1"><span class="material-symbols-outlined text-[13px] text-primary" data-icon="folder">folder</span> <span>Group 10/Part 2</span></div>
+<div class="w-16 text-right px-space-sm">5</div>
+<div class="w-16 text-right px-space-sm">—</div>
+<div class="w-48 px-space-md"></div>
+<div class="w-14 text-right px-space-sm"></div>
+</div>
+<div class="flex items-center h-[24px] px-space-md bg-surface-container-low hover:bg-surface-container-high">
+<div class="w-7 text-center text-outline">☆</div>
+<div class="flex-1 px-space-sm flex items-center space-x-1"><span class="material-symbols-outlined text-[13px] text-primary" data-icon="folder">folder</span> <span>Group 11</span></div>
+<div class="w-16 text-right px-space-sm">—</div>
+<div class="w-16 text-right px-space-sm">3</div>
+<div class="w-48 px-space-md"></div>
+<div class="w-14 text-right px-space-sm"></div>
+</div>
+<div class="flex items-center h-[24px] px-space-md bg-[#1A4B75] text-white border-l-[3px] border-primary-container">
+<div class="w-7 text-center text-secondary-fixed">★</div>
+<div class="flex-1 px-space-sm flex items-center space-x-1"><span class="material-symbols-outlined text-[13px] text-primary" data-icon="folder">folder</span> <span>Set 003</span></div>
+<div class="w-16 text-right px-space-sm font-medium">200</div>
+<div class="w-16 text-right px-space-sm">—</div>
+<div class="w-48 px-space-md flex space-x-1">
+<span class="px-space-xs rounded bg-[#382A18] text-[#FFD285] border border-[#94682E] text-[10px]">best</span>
+<span class="px-space-xs rounded bg-[#1B3224] text-[#82E0AA] border border-[#3E7756] text-[10px]">travel</span>
+</div>
+<div class="w-14 text-right px-space-sm">1</div>
+</div>
+<div class="flex items-center h-[24px] px-space-md bg-surface-container hover:bg-surface-container-high">
+<div class="w-7 text-center text-outline">☆</div>
+<div class="flex-1 px-space-sm flex items-center space-x-1"><span class="material-symbols-outlined text-[13px] text-primary" data-icon="folder">folder</span> <span>Set 004</span></div>
+<div class="w-16 text-right px-space-sm">21</div>
+<div class="w-16 text-right px-space-sm">—</div>
+<div class="w-48 px-space-md flex space-x-1"><span class="px-space-xs rounded bg-[#382A18] text-[#FFD285] border border-[#94682E] text-[10px]">best</span></div>
+<div class="w-14 text-right px-space-sm"></div>
+</div>
+</div>
+</div>
+<!-- Right Side Inspector Canvas Placeholder (Blurred / darkened in background) -->
+<div class="w-72 bg-surface-container border-l border-outline-variant p-space-md flex flex-col space-y-space-md opacity-45 pointer-events-none">
+<div class="aspect-[4/3] bg-surface-container-lowest border border-outline-variant rounded flex items-center justify-center text-outline text-label-sm font-label-sm">
+<span>Preview Frame</span>
+</div>
+<div class="text-label-md font-label-md font-semibold text-on-surface">Set 003</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant">200 items in set</div>
+</div>
+<!-- ================= FLUENT ACRYLIC MODAL OVERLAY (Privacy Dialog) ================= -->
+<div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center p-space-lg z-30 animate-in fade-in duration-150">
+<!-- Qt / PySide6 Window Frame Container (QDialog Fluent specs) -->
+<div class="w-full max-w-[620px] bg-surface-container rounded-lg border border-outline-variant shadow-2xl flex flex-col overflow-hidden max-h-[942px]">
+<!-- Dialog Titlebar / QWidget Titlebar Header -->
+<div class="h-[36px] bg-surface-container-high border-b border-outline-variant px-space-md flex items-center justify-between shrink-0 select-none">
+<div class="flex items-center space-x-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[16px]" data-icon="security">security</span>
+<span class="text-label-md font-label-md font-semibold text-on-surface tracking-wide">Privacy &amp; Explorer Protection</span>
+<span class="text-[10px] px-space-xs py-[1px] bg-surface-container-lowest text-primary rounded border border-outline-variant font-mono">QDialog · Qt 6</span>
+</div>
+<button class="w-[26px] h-[24px] rounded flex items-center justify-center text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" title="Close Dialog">
+<span class="material-symbols-outlined text-[15px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Scrollable Dialog Body -->
+<div class="p-space-lg overflow-y-auto space-y-space-lg flex-1">
+<!-- Tone Banner: Reassuring Explainer -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex items-start space-x-space-md">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5" data-icon="verified_user">verified_user</span>
+<div class="space-y-0.5 text-body-sm font-body-sm">
+<p class="text-on-surface font-medium">Non-destructive local protection</p>
+<p class="text-on-surface-variant leading-relaxed">
+                All changes are non-destructive and can be restored at any time. Keeps sensitive photo folders discreet and hidden from Windows Explorer telemetry, Jump Lists, and Quick Access.
+              </p>
+</div>
+</div>
+<!-- Section 1: 7 Core Settings Switches -->
+<div class="space-y-space-sm">
+<div class="text-label-xs font-label-xs text-outline uppercase tracking-wider px-space-xs">
+              System Visibility &amp; Telemetry Rules
+            </div>
+<div class="bg-surface-container-low border border-outline-variant rounded divide-y divide-surface-container">
+<!-- Toggle 1 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Prevent folders from appearing in Explorer Quick Access</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Disables automatic recent folder pin additions and Frequent Folders feed.</div>
+</div>
+<label class="fluent-switch">
+<input checked="" type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Clear Windows Explorer Jump List &amp; Run History</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Cleans recent traces of vault paths from taskbar right-click popups.</div>
+</div>
+<label class="fluent-switch">
+<input checked="" type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 3 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Hide .vault_private_archive and tagged folders from Explorer search indexing</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Applies Windows Search exclusion attribute directly to cataloged subdirectories.</div>
+</div>
+<label class="fluent-switch">
+<input checked="" type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 4 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Auto-clear session history on app exit</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Removes temporary caches, filter queries, and MRU records immediately upon closing FolderVault.</div>
+</div>
+<label class="fluent-switch">
+<input type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 5 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Scrub thumbnail cache for hidden sets (thumbcache_*.db)</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Requests system cache invalidation so cached thumbnail art is erased.</div>
+</div>
+<label class="fluent-switch">
+<input checked="" type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 6 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Enable stealth mode titlebar</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Renames window header to a generic utility name when minimized or inactive.</div>
+</div>
+<label class="fluent-switch">
+<input type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+<!-- Toggle 7 -->
+<div class="p-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="pr-space-md">
+<div class="text-body-sm font-body-sm font-medium text-on-surface">Lock Vault after 15 minutes of inactivity</div>
+<div class="text-label-xs font-label-xs text-on-surface-variant mt-0.5">Requires quick biometric pin or passphrase re-verification after idle timeout.</div>
+</div>
+<label class="fluent-switch">
+<input checked="" type="checkbox"/>
+<span class="fluent-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Section 2: Explorer Actions Bar (3 Action Triggers) -->
+<div class="space-y-space-sm">
+<div class="text-label-xs font-label-xs text-outline uppercase tracking-wider px-space-xs">
+              Immediate Operations
+            </div>
+<div class="grid grid-cols-3 gap-space-sm">
+<!-- Action Button 1 -->
+<button class="bg-surface-container-high hover:bg-surface-variant border border-outline-variant rounded p-space-sm flex flex-col items-center justify-center space-y-1 text-center transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-primary" data-icon="history_toggle_off">history_toggle_off</span>
+<span class="text-label-sm font-label-sm text-on-surface font-medium">Clear History Now</span>
+<span class="text-[9px] text-outline">MRU &amp; Search Traces</span>
+</button>
+<!-- Action Button 2 -->
+<button class="bg-surface-container-high hover:bg-surface-variant border border-outline-variant rounded p-space-sm flex flex-col items-center justify-center space-y-1 text-center transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-primary" data-icon="keep_off">keep_off</span>
+<span class="text-label-sm font-label-sm text-on-surface font-medium">Unpin All from Quick Access</span>
+<span class="text-[9px] text-outline">Releases Explorer pins</span>
+</button>
+<!-- Action Button 3 (Subtle alert prompt style) -->
+<button class="bg-surface-container-high hover:bg-[#341b1b] border border-outline-variant hover:border-error-container rounded p-space-sm flex flex-col items-center justify-center space-y-1 text-center transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-error group-hover:scale-105 transition-transform" data-icon="restart_alt">restart_alt</span>
+<span class="text-label-sm font-label-sm text-on-surface font-medium group-hover:text-error">Restart Windows Explorer</span>
+<span class="text-[9px] text-outline">Forces shell refresh</span>
+</button>
+</div>
+</div>
+<!-- Section 3: Qt-style Read-only Log / Status Console -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between px-space-xs">
+<span class="text-label-xs font-label-xs text-outline uppercase tracking-wider">Shield Telemetry Console</span>
+<span class="flex items-center space-x-1 text-[10px] text-[#82E0AA]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#82E0AA] inline-block animate-pulse"></span>
+<span>Active Hook</span>
+</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-space-sm font-mono text-[10px] leading-relaxed text-on-surface-variant select-text overflow-x-auto space-y-0.5">
+<div class="text-outline">[18:41:58] Initializing FolderVault shell filter hook (v1.4.2)...</div>
+<div class="text-[#82E0AA]">[18:42:10] Privacy shield active. 0 folders exposed in Quick Access. Explorer telemetry suppressed.</div>
+<div class="text-outline">[18:42:12] Search indexing filter verified for 636 cataloged paths.</div>
+</div>
+</div>
+</div>
+<!-- Dialog Footer Actions -->
+<div class="h-[46px] bg-surface-container-high border-t border-outline-variant px-space-lg flex items-center justify-between shrink-0">
+<button class="text-label-sm font-label-sm text-on-surface-variant hover:text-on-surface px-space-md py-[4px] rounded transition-colors flex items-center space-x-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="restore">restore</span>
+<span>Restore Defaults</span>
+</button>
+<div class="flex items-center space-x-space-sm">
+<button class="bg-surface-container hover:bg-surface-variant border border-outline-variant text-on-surface text-label-sm font-label-sm px-space-lg py-[5px] rounded transition-colors">
+              Cancel
+            </button>
+<button class="bg-primary-container text-on-primary-container hover:bg-tertiary-container border border-primary text-label-sm font-label-sm font-semibold px-space-xl py-[5px] rounded transition-colors flex items-center space-x-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Done / Close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- ================= FOOTER STATUS BAR (Shared Component JSON anchor) ================= -->
+<footer class="bg-surface-container-lowest docked full-width bottom-0 border-t border-outline-variant flat no shadows fixed bottom-0 left-0 w-full z-40 flex justify-between items-center px-space-md h-[22px] text-on-surface-variant text-label-xs font-label-xs">
+<!-- Left: Exact Metrics String from JSON Authority -->
+<div class="text-label-xs font-label-xs text-on-surface-variant flex items-center space-x-space-xs truncate">
+<span>636 folders · 624 with images · 58,531 images · 2 favorites · 0 hidden | showing 636</span>
+</div>
+<!-- Right: Status and Build Version links from JSON Authority -->
+<div class="flex items-center space-x-space-md shrink-0">
+<div class="flex items-center space-x-1 hover:text-on-surface cursor-pointer transition-colors duration-100">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container inline-block"></span>
+<span class="text-on-surface font-semibold">Ready</span>
+</div>
+<div class="h-2.5 w-[1px] bg-outline-variant"></div>
+<div class="text-on-surface-variant hover:text-on-surface cursor-pointer font-normal transition-colors duration-100">
+<span>v1.4.2</span>
+</div>
+</div>
+</footer>
+</body></html>
